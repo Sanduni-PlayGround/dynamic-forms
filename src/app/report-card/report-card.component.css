@@ -1,0 +1,14 @@
+#overlay{
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+#report-container{
+  width: 80%;
+  height: 80%;
+}
+
+@media print {
+  #button-container{
+    display: none !important;
+  }
+}

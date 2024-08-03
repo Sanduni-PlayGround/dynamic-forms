@@ -1,0 +1,73 @@
+<h1 class="text-center p-2 border-bottom">
+  Dynamic Forms
+</h1>
+<form (ngSubmit)="generateReportCard()" [formGroup]="form" class="px-2">
+  <div class="p-2">
+    <label class="form-label fw-bold" for="txt-nic" >Student NIC</label>
+    <input id="txt-nic"
+           [class]="getCssClasses('nic')"
+           type="text" class="form-control"
+           placeholder="Enter the student nic"
+           formControlName="nic" >
+  </div>
+
+  <div class="p-2">
+    <label class="form-label fw-bold" for="txt-name" >Student Name</label>
+    <input id="txt-name" class="form-control" placeholder="Enter the student name"
+           [class]="getCssClasses('name')"
+           formControlName="name">
+  </div>
+
+  <div class="p-2">
+    <label class="form-label fw-bold" for="rd-gender-male" >Student Gender</label>
+    <div>
+      <input type="radio" name="gender" id="rd-gender-male" class="form-check-input"
+             [class]="getCssClasses('gender')"
+             formControlName="gender"
+             value="male">
+      <label for="rd-gender-male">Male</label>
+      <input type="radio" name="gender" id="rd-gender-female" class="form-check-input"
+             [class]="getCssClasses('gender')"
+             formControlName="gender"
+             value="female">
+      <label for="rd-gender-female">Female</label>
+    </div>
+  </div>
+  <div>
+    <label class="form-label fw-bold">Student Mark Sheet</label>
+    <table>
+      @for (subjects of form.controls.subjects.controls; track $index){
+        <tr [formGroup]="subjects">
+          <td>
+            <input type="text" class="form-control" placeholder="Enter subject {{$index + 1}}"
+                   formControlName="name" [class]="getCssClasses('name', subjects)">
+          </td>
+          <td>
+            <input type="number"
+                   [class]="getCssClasses('marks', subjects)"
+                   min="0" max="100"
+                   class="form-control"
+                   placeholder="marks"
+                   formControlName="marks">
+          </td>
+          <td>
+            @if ($first){
+              <button type="button" (click)="addNewSubject()" class="btn btn-primary w-100">+</button>
+            } @else {
+              <button type="button" (click)="form.controls.subjects.removeAt($index)" class="btn btn-danger w-100">-</button>
+            }
+
+          </td>
+        </tr>
+      }
+
+    </table>
+  </div>
+  <div class="p-2">
+    <button class="btn btn-success">Generate Report Card</button>
+  </div>
+</form>
+@if (displayReportCard){
+  <app-report-card [student]="student" (close)="displayReportCard = !displayReportCard"/>
+}
+

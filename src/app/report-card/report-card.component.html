@@ -1,0 +1,54 @@
+<div id="overlay"
+     class="position-fixed vh-100 vw-100
+     fixed-top bg-black d-flex
+     justify-content-center align-items-center">
+  <div id="report-container" class="bg-white rounded">
+    <h3 class="text-center border-bottom pt-2">Report Card</h3>
+    <div class="mb-2 text-center">
+      <strong>Name: </strong>{{student.name}}
+    </div>
+    <div class="mb-2 text-center">
+      <strong>NIC: </strong>{{ student.nic }}
+    </div>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Subject</th>
+        <th class="text-center">Marks</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (subject of student.subjects; track $index){
+          <tr>
+            <td>{{subject.name}}</td>
+            <td class="text-center">{{ subject.marks }}</td>
+          </tr>
+
+        }
+      </tbody>
+      <tfoot>
+      <tr>
+        <th>Total Marks</th>
+        <th class="text-center">{{ getTotalMarks() }}</th>
+      </tr>
+      <tr>
+        <th>Avg. Marks</th>
+        <th class="text-center">{{ getAvgMarks() }}</th>
+      </tr>
+      <tr>
+        <th>Grade</th>
+        <th class="text-center">{{ getGrade() }}</th>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<div id="button-container" class="z-1 position-fixed fixed-top d-flex justify-content-center gap-3 p-3">
+  <button class="btn btn-primary">
+    Print Report
+  </button>
+  <button (click)="close.emit()" class="btn btn-warning">
+    Close Report
+  </button>
+</div>
+
